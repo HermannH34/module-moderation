@@ -1,4 +1,4 @@
 class Message < ApplicationRecord
+  include Moderation
   validates :username, presence: true
-  validates :comment, length: { in: 3..200 }
 end
