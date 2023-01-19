@@ -1,21 +1,22 @@
 require "json"
 require "open-uri"
+require 'net/http'
 
 class Message < ApplicationRecord
   # include Moderation
   validates :comment, length: { in: 3..200 }
   validates :username, presence: true
 
-  before_validation :moderation
+  before_create :moderation
 
   private
 
   def moderation
-    # self.comment = "hello"
-    url = "https://moderation.logora.fr/"
-    user_serialized = URI.open(url).read
-    user = JSON.parse(user_serialized)
-    debugger
-
+    uri = URI('https://moderation.logora.fr/predict')
+    params = { :text => "#{comment}" }
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
+    prediction = JSON.parse(res.body)
+    # debugger
   end
 end
