@@ -14,5 +14,12 @@ RSpec.describe Message, type: :model do
       expect(Message.count).to eq(1)
     end
   end
+  describe "Moderation" do
+    it "should call the API and obtain the score" do
+      message = Message.create(username: 'Hermann', comment: 'Article épatant')
+
+      allow(message).to receive(:moderation).and_return('{"prediction"=>{"0"=>0.022937463372945786}}')
+    end
+  end
 
 end

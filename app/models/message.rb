@@ -15,8 +15,13 @@ class Message < ApplicationRecord
     uri = URI('https://moderation.logora.fr/predict')
     params = { :text => "#{comment}" }
     uri.query = URI.encode_www_form(params)
-    res = Net::HTTP.get_response(uri)
+    # res = Net::HTTP.get_response(uri)
+    res = callApi(uri)
     prediction = JSON.parse(res.body)
     # debugger
+  end
+
+  def callApi(uri)
+    Net::HTTP.get_response(uri)
   end
 end
