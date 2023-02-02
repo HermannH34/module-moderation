@@ -1,24 +1,31 @@
-# README
+## Module Modération
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Module qui permet de modérer automatiquement les attributs d'un modèle Ruby on Rails.
 
-Things you may want to cover:
+La modération consiste à rejeter les contenus haineux ou contraires à la loi grâce à une API de modération.
 
-* Ruby version
+Le module, nommé Moderable, prend la forme d'un "concern" Rails qui peut être inclus dans d'autres classes.
 
-* System dependencies
+```ruby
+# Le concern de modération
+module Moderable
+  extend ActiveSupport::Concern
+ 
+  # code
+end
 
-* Configuration
+# Une classe qui souhaite faire appel à la modération de ses attributs
+class ModeratedModel < ApplicationRecord
+  include Moderable
+ 
+  # code
+end
+```
+Le concern prend en argument la ou les colonnes qui seront modérées.
 
-* Database creation
+Le concern appel l'API de modération pour voir si le contenu des colonnes est rejeté ou accepté, et stocker le résultat sous forme de booléen dans la classe modérée dans une colonne appelée "is_accepted".
 
-* Database initialization
+Les classes qui incluent le concern Moderable doivent avoir une colonne "is_accepted".
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+URL de l'API de modération : https://moderation.logora.fr  (utiliser la route /predict)
+Documentation : https://moderation.logora.fr/docs/ 
