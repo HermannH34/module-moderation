@@ -7,12 +7,6 @@ La modération consiste à rejeter les contenus haineux ou contraires à la loi 
 Le module, nommé Moderable, prend la forme d'un "concern" Rails qui peut être inclus dans d'autres classes.
 
 ```ruby
-# Le concern de modération
-module Moderable
-  extend ActiveSupport::Concern
- 
-  # code
-end
 
 # Une classe qui souhaite faire appel à la modération de ses attributs
 class ModeratedModel < ApplicationRecord
